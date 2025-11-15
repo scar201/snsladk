@@ -1,20 +1,4 @@
---[[
-    ═══════════════════════════════════════════════════════════
-    🔥 ULTIMATE RP GUI V2 - واجهة محسّنة + مقالب قوية
-    ═══════════════════════════════════════════════════════════
-    
-    ✅ كل المقالب تشتغل على السيرفر (الكل يشوفها!)
-    ✅ تجاوز حماية كامل
-    ✅ أشياء جديدة وقوية
-    
-    🎯 افتح القائمة: F12
-    
-    ═══════════════════════════════════════════════════════════
-]]
 
--- ═══════════════════════════════════════════════════════════
--- المتغيرات
--- ═══════════════════════════════════════════════════════════
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
@@ -25,35 +9,16 @@ local players = game:GetService("Players")
 local uis = game:GetService("UserInputService")
 local lighting = game:GetService("Lighting")
 
-local bypassedAC = 0
-local selectedPlayer = nil
-local flying = false
-local noclipping = false
+
 local esping = false
 
 -- ═══════════════════════════════════════════════════════════
 -- BYPASS الكامل
 -- ═══════════════════════════════════════════════════════════
-print("🛡️ [BYPASS] بدء تعطيل الحماية...")
 
--- تعطيل Anti-Cheat
-local acNames = {
-    "AntiCheat", "AC", "AntiExploit", "Security", "Protection",
-    "AntiHack", "Detector", "KickScript", "BanScript", "Guard", "Shield"
 }
 
 for _, location in pairs({workspace, rep, player.PlayerScripts, player.PlayerGui}) do
-    for _, name in pairs(acNames) do
-        pcall(function()
-            local ac = location:FindFirstChild(name, true)
-            if ac then
-                ac:Destroy()
-                bypassedAC = bypassedAC + 1
-            end
-        end)
-    end
-end
-
 -- تعطيل LocalScripts المشبوهة
 for _, script in pairs(player.PlayerScripts:GetDescendants()) do
     if script:IsA("LocalScript") then
@@ -68,21 +33,7 @@ for _, script in pairs(player.PlayerScripts:GetDescendants()) do
     end
 end
 
--- Kick Protection
-pcall(function()
-    local mt = getrawmetatable(game)
-    setreadonly(mt, false)
-    local oldNamecall = mt.__namecall
-    mt.__namecall = newcclosure(function(self, ...)
-        if getnamecallmethod() == "Kick" and self == player then
-            return
-        end
-        return oldNamecall(self, ...)
-    end)
-    setreadonly(mt, true)
-end)
 
-print("✅ [BYPASS] تم تعطيل: " .. bypassedAC .. " حماية")
 
 -- ═══════════════════════════════════════════════════════════
 -- دوال مساعدة
